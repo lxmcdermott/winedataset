@@ -5,9 +5,8 @@ from tensorflow.keras.callbacks import EarlyStopping
 import matplotlib.pyplot as plt
 from normalize import load_and_preprocess_data
 
-file_path = 'winequality-white.csv'
-
 #load and preprocess data
+file_path = 'winequality-white.csv'
 X_train_scaled, X_test_scaled, y_train, y_test = load_and_preprocess_data(file_path)
 
 #define the ANN
@@ -18,7 +17,6 @@ model.add(Dense(1, activation='linear'))
 
 #compile model
 model.compile(optimizer='adam', loss='mean_squared_error', metrics=['mae'])
-
 #add early stopping
 early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
 
@@ -29,24 +27,28 @@ history = model.fit(X_train_scaled, y_train, epochs=100, batch_size=32, validati
 loss, mae = model.evaluate(X_test_scaled, y_test)
 print(f'Test Loss: {loss}, Test MAE: {mae}')
 
+model.save('wine_quality_model.h5')
+
 #plot training history
-plt.figure(figsize=(12, 6))
+# plt.figure(figsize=(12, 6))
 
-plt.subplot(1, 2, 1)
-plt.plot(history.history['loss'])
-plt.plot(history.history['val_loss'])
-plt.title('Model loss')
-plt.xlabel('Epoch')
-plt.ylabel('Loss')
-plt.legend(['Train', 'Validation'], loc='upper right')
+# plt.subplot(1, 2, 1)
+# plt.plot(history.history['loss'])
+# plt.plot(history.history['val_loss'])
+# plt.title('Model loss')
+# plt.xlabel('Epoch')
+# plt.ylabel('Loss')
+# plt.legend(['Train', 'Validation'], loc='upper right')
 
-plt.subplot(1, 2, 2)
-plt.plot(history.history['mae'])
-plt.plot(history.history['val_mae'])
-plt.title('Model MAE')
-plt.xlabel('Epoch')
-plt.ylabel('MAE')
-plt.legend(['Train', 'Validation'], loc='upper right')
+# plt.subplot(1, 2, 2)
+# plt.plot(history.history['mae'])
+# plt.plot(history.history['val_mae'])
+# plt.title('Model MAE')
+# plt.xlabel('Epoch')
+# plt.ylabel('MAE')
+# plt.legend(['Train', 'Validation'], loc='upper right')
 
-plt.tight_layout()
-plt.show()
+# plt.tight_layout()
+# plt.show()
+
+
